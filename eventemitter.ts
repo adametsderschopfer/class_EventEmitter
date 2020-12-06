@@ -1,9 +1,7 @@
 class EventEmitter {
-  constructor() {
-    this.events = Object.create({});
-  }
+  constructor(private events: Object) { }
 
-  on(eventName, ...callbacks) {
+  on(eventName: string, ...callbacks: Array<Function>) {
     if (!callbacks) {
       this.events[eventName] = [];
 
@@ -13,11 +11,11 @@ class EventEmitter {
     this.events[eventName] = [...callbacks];
   }
 
-  emit(eventName, ...args) {
+  emit(eventName: string, ...args: Array<any>) {
     return (
       this.events &&
       this.events[eventName].length &&
-      this.events[eventName].forEach((fn) => {
+      this.events[eventName].forEach((fn: Function) => {
         args.length
           ? args.forEach((arg) => {
               fn(arg);
@@ -27,3 +25,5 @@ class EventEmitter {
     );
   }
 }
+
+export default EventEmitter;
