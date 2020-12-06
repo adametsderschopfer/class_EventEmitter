@@ -1,7 +1,7 @@
 class EventEmitter {
   constructor(private events: Object) { }
 
-  on(eventName: string, ...callbacks: Array<Function>) {
+  on(eventName: string, ...callbacks: Array<Function>): void {
     if (!callbacks) {
       this.events[eventName] = [];
 
