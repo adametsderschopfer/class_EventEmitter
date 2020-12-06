@@ -1,27 +1,29 @@
 class EventEmitter {
-    constructor() {
-        this.events = Object.create({});
+  constructor() {
+    this.events = Object.create({});
+  }
+
+  on(eventName, ...callbacks) {
+    if (!callbacks) {
+      this.events[eventName] = [];
+
+      return;
     }
 
-    on(eventName, ...callbacks) {
-        if (!callbacks) {
-            (this.events[eventName] = []);
+    this.events[eventName] = [...callbacks];
+  }
 
-            return;
-        }
-
-        this.events[eventName] = [...callbacks];
-    }
-
-    emit(eventName, ...args) {
-        return this.events &&
-        this.events[eventName].length &&
-        this.events[eventName].forEach((fn) => {
-            args.length
-                ? args.forEach((arg) => {
-                    fn(arg);
-                })
-                : fn(undefined);
-        });
-    }
+  emit(eventName, ...args) {
+    return (
+      this.events &&
+      this.events[eventName].length &&
+      this.events[eventName].forEach((fn) => {
+        args.length
+          ? args.forEach((arg) => {
+              fn(arg);
+            })
+          : fn(undefined);
+      })
+    );
+  }
 }
